@@ -12,6 +12,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  console.log(row);
   return (
     <div className="flex flex-row items-center justify-center gap-3">
       <Button variant="destructive" size="icon">
