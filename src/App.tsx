@@ -10,6 +10,7 @@ import {
   MediaBlogs,
   Careers,
   ContactUs,
+  AddCareer,
 } from "./routes";
 import RootLayout from "./layout/RootLayout";
 import ProtectedRoutes from "./lib/ProtectedRoutes";
@@ -27,8 +28,11 @@ function App() {
             <Route element={<Dashboard />} path="/dashboard" />
             <Route element={<Home />} path="/home" />
             <Route element={<MediaBlogs />} path="/media-blogs" />
-            <Route element={<Careers />} path="/careers" />
             <Route element={<ContactUs />} path="/contact-us" />
+
+            {/* Careers Routes */}
+            <Route element={<Careers />} path="/careers" />
+            <Route element={<AddCareer />} path="/careers/add-career" />
           </Route>
         </Route>
       </Routes>
