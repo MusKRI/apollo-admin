@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // **** Local Imports ****
 import { Input } from "@/components/ui/input/input";
+import { Textarea } from "@/components/ui/textarea/textarea";
 import { Button } from "@/components/ui/button/button";
 import {
   Form,
@@ -69,9 +70,9 @@ const CreateCareerForm = () => {
                   <FormItem>
                     <FormLabel>Career Description</FormLabel>
                     <FormControl>
-                      <Input
+                      <Textarea
                         placeholder="career description..."
-                        type="text"
+                        rows={6}
                         {...field}
                       />
                     </FormControl>

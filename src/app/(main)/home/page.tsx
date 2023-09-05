@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // **** Local Imports ****
 import { Input } from "@/components/ui/input/input";
+import { Textarea } from "@/components/ui/textarea/textarea";
 import { Button } from "@/components/ui/button/button";
 import {
   Form,
@@ -17,37 +18,43 @@ import {
 import { Separator } from "@/components/ui/separator/separator";
 
 // formSchema
-const desktopSchema = z.object({
-  desktopImages: z.array(z.string()),
+const carouselSchema = z.object({
+  carouselImages: z.array(z.string()),
 });
 
-const mobileSchema = z.object({
-  mobileImages: z.array(z.string()),
+const aboutUsSchema = z.object({
+  purpose: z.string(),
+  values: z.string(),
 });
 
-type DesktopFormValues = z.infer<typeof desktopSchema>;
-type MobileFormValues = z.infer<typeof mobileSchema>;
+type CarouselFormValues = z.infer<typeof carouselSchema>;
+type AboutUsFormValues = z.infer<typeof aboutUsSchema>;
 
 const Home = () => {
-  const desktopForm = useForm<DesktopFormValues>({
-    resolver: zodResolver(desktopSchema),
+  const carouselForm = useForm<CarouselFormValues>({
+    resolver: zodResolver(carouselSchema),
     defaultValues: {
-      desktopImages: ["", "", "", ""],
+      carouselImages: ["", "", "", ""],
     },
   });
 
-  const mobileForm = useForm<MobileFormValues>({
-    resolver: zodResolver(mobileSchema),
+  const aboutUsForm = useForm<AboutUsFormValues>({
+    resolver: zodResolver(aboutUsSchema),
     defaultValues: {
-      mobileImages: ["", "", "", ""],
+      purpose: "",
+      values: "",
     },
   });
 
-  const onSubmitDesktop: SubmitHandler<DesktopFormValues> = async (data) => {
+  const onSubmitCarouselInfo: SubmitHandler<CarouselFormValues> = async (
+    data
+  ) => {
     console.log(data);
   };
 
-  const onSubmitMobile: SubmitHandler<MobileFormValues> = async (data) => {
+  const onSubmitAboutUsInfo: SubmitHandler<AboutUsFormValues> = async (
+    data
+  ) => {
     console.log(data);
   };
 
@@ -59,16 +66,16 @@ const Home = () => {
 
       <div className="h-[calc(100%-56px)] px-2 py-4 space-y-5">
         <div>
-          <h1 className="text-lg font-medium mb-3">Desktop Images</h1>
-          <Form {...desktopForm}>
-            <form onSubmit={desktopForm.handleSubmit(onSubmitDesktop)}>
+          <h1 className="text-lg font-medium mb-3">Carousel</h1>
+          <Form {...carouselForm}>
+            <form onSubmit={carouselForm.handleSubmit(onSubmitCarouselInfo)}>
               <div className="mb-3 grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {[0, 1, 2, 3].map((fieldIndex) => {
                   return (
                     <FormField
                       key={fieldIndex}
-                      control={desktopForm.control}
-                      name={`desktopImages.${fieldIndex}`}
+                      control={carouselForm.control}
+                      name={`carouselImages.${fieldIndex}`}
                       render={({ field }) => {
                         return (
                           <FormItem>
@@ -90,7 +97,7 @@ const Home = () => {
               </div>
               <div className="flex items-center gap-4 justify-end">
                 <Button type="submit">
-                  <span>Add</span>
+                  <span>Save</span>
                 </Button>
               </div>
             </form>
@@ -100,38 +107,53 @@ const Home = () => {
         <Separator />
 
         <div>
-          <h1 className="text-lg font-medium mb-3">Mobile Images</h1>
-          <Form {...mobileForm}>
-            <form onSubmit={mobileForm.handleSubmit(onSubmitMobile)}>
+          <h1 className="text-lg font-medium mb-3">About Us</h1>
+          <Form {...aboutUsForm}>
+            <form onSubmit={aboutUsForm.handleSubmit(onSubmitAboutUsInfo)}>
               <div className="mb-3 grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {[0, 1, 2, 3].map((fieldIndex) => {
-                  return (
-                    <FormField
-                      key={fieldIndex}
-                      control={mobileForm.control}
-                      name={`mobileImages.${fieldIndex}`}
-                      render={({ field }) => {
-                        return (
-                          <FormItem>
-                            <FormLabel>Image {fieldIndex + 1}</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Image url..."
-                                type="text"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        );
-                      }}
-                    />
-                  );
-                })}
+                <FormField
+                  control={aboutUsForm.control}
+                  name="purpose"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Purpose</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Purpose..."
+                            rows={4}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+
+                <FormField
+                  control={aboutUsForm.control}
+                  name="values"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Values</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Values..."
+                            rows={4}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
               </div>
               <div className="flex items-center gap-4 justify-end">
                 <Button type="submit">
-                  <span>Add</span>
+                  <span>Save</span>
                 </Button>
               </div>
             </form>

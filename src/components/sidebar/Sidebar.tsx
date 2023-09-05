@@ -6,6 +6,12 @@ import { Link, useLocation } from "react-router-dom";
 
 // **** Local Imports ****
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip/tooltip";
 import { useSidebar } from "./hooks/useSidebar";
 import { sidebarItems } from "./sidebarItems";
 
@@ -83,7 +89,20 @@ const Sidebar = () => {
                     )}
                   </AnimatePresence>
                   <span className="z-10 flex flex-row gap-2 items-center justify-center px-4">
-                    <Icon className="w-4 h-4" />
+                    {isOpen ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Icon className="w-4 h-4" />
+                          </TooltipTrigger>
+                          <TooltipContent className="ml-4 border border-border">
+                            <p>{label}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <Icon className="w-4 h-4" />
+                    )}
                     {!isOpen && <span className="text-sm">{label}</span>}
                   </span>
                 </div>
